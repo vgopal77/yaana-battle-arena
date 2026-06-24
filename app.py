@@ -302,6 +302,7 @@ def init_state():
         "p1_locked":None,"p2_locked":None,"p1_wpn_locked":None,"p2_wpn_locked":None,
         "p1_name_locked":"Player 1","p2_name_locked":"Player 2",
         "battle_log":[],"game_over":False,"winner_name":None,"winner_skin":None,
+        "current_turn":"p1",
     }
     for k, v in defaults.items():
         if k not in st.session_state: st.session_state[k] = v
@@ -321,13 +322,15 @@ def start_match(s1, s2, w1, w2, n1, n2):
     st.session_state.game_over       = False
     st.session_state.winner_name     = None
     st.session_state.winner_skin     = None
+    st.session_state.current_turn    = "p1"
 
 def reset_match():
     for k in ["p1_health","p1_shields","p2_health","p2_shields",
               "p1_locked","p2_locked","p1_wpn_locked","p2_wpn_locked",
               "game_over","winner_name","winner_skin"]:
         st.session_state[k] = None
-    st.session_state.battle_log = []
+    st.session_state.battle_log  = []
+    st.session_state.current_turn = "p1"
 
 def apply_damage(hp, sh, dmg):
     if sh > 0:
@@ -352,7 +355,7 @@ def do_attack(atk_name, atk_skin, def_name, def_skin,
 
     damage = w["damage"]; label = "Hit"; etype = "hit"
     if atk_skin == "Midas" and random.random() < atk.get("gold_chance", 0):
-        damage = w["damage"] * 3; label = "👑 GOLDEN TOUCH — TRIPLE DMG"; etype = "crit"
+        damage = w["damage"] * 2; label = "👑 GOLDEN TOUCH — DOUBLE DMG"; etype = "crit"
     elif random.random() < w["crit_chance"]:
         damage = w["damage"] * 2; label = "💥 CRITICAL HIT"; etype = "crit"
 
@@ -491,21 +494,38 @@ else:
         if st.button("🔄  PLAY AGAIN", use_container_width=True, type="primary"):
             reset_match(); st.rerun()
     else:
-        a1, a2 = st.columns(2)
-        with a1:
-            if st.button(f"💥  {n1.upper()} ATTACKS!", use_container_width=True, type="primary"):
-                do_attack(n1, st.session_state.p1_locked,
-                          n2, st.session_state.p2_locked,
-                          st.session_state.p1_wpn_locked,
-                          "p2_health","p2_shields","p1_health","p1_shields")
-                st.rerun()
-        with a2:
-            if st.button(f"💥  {n2.upper()} ATTACKS!", use_container_width=True, type="primary"):
-                do_attack(n2, st.session_state.p2_locked,
-                          n1, st.session_state.p1_locked,
-                          st.session_state.p2_wpn_locked,
-                          "p1_health","p1_shields","p2_health","p2_shields")
-                st.rerun()
+        turn = st.session_state.current_turn
+        cur_name  = n1 if turn == "p1" else n2
+        cur_skin  = st.session_state.p1_locked if turn == "p1" else st.session_state.p2_locked
+        cur_wpn   = st.session_state.p1_wpn_locked if turn == "p1" else st.session_state.p2_wpn_locked
+        def_name  = n2 if turn == "p1" else n1
+        def_skin  = st.session_state.p2_locked if turn == "p1" else st.session_state.p1_locked
+        def_hp    = "p2_health" if turn == "p1" else "p1_health"
+        def_sh    = "p2_shields" if turn == "p1" else "p1_shields"
+        atk_hp    = "p1_health" if turn == "p1" else "p2_health"
+        atk_sh    = "p1_shields" if turn == "p1" else "p2_shields"
+
+        turn_color = "#4da6ff" if turn == "p1" else "#ff5252"
+        st.markdown(f"""
+<div style="text-align:center;padding:10px 16px;margin-bottom:10px;
+  background:rgba(5,10,40,0.85);border:2px solid {turn_color};border-radius:8px;
+  box-shadow:0 0 20px {turn_color}55;">
+  <div style="font-family:'Bangers',sans-serif;font-size:22px;letter-spacing:4px;
+    color:{turn_color};text-shadow:-1px -1px 0 #000,1px 1px 0 #000;">
+    ⚡ &nbsp; IT'S {cur_name.upper()}'S TURN &nbsp; ⚡
+  </div>
+  <div style="font-family:'Rajdhani',sans-serif;font-size:13px;color:#aabbdd;
+    margin-top:2px;letter-spacing:1px;">
+    Pass the device to {cur_name} and press ATTACK
+  </div>
+</div>""", unsafe_allow_html=True)
+
+        if st.button(f"💥  {cur_name.upper()} — ATTACK!", use_container_width=True, type="primary"):
+            do_attack(cur_name, cur_skin, def_name, def_skin, cur_wpn,
+                      def_hp, def_sh, atk_hp, atk_sh)
+            if not st.session_state.game_over:
+                st.session_state.current_turn = "p2" if turn == "p1" else "p1"
+            st.rerun()
 
 # ── Battle Log ────────────────────────────────────────────────────────────────
 
