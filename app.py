@@ -4,7 +4,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 from gamedata import SKINS, WEAPONS
 
-st.set_page_config(page_title="Fortnite Battle Simulator", page_icon="💥", layout="wide")
+st.set_page_config(page_title="YAANA BATTLE ARENA", page_icon="⚔️", layout="wide")
 
 # ── Shared online rooms ───────────────────────────────────────────────────────
 # st.cache_resource creates a TRUE app-wide singleton shared across ALL user
