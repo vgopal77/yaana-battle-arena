@@ -1915,7 +1915,7 @@ if st.session_state.game_mode is None:
         (bg2,"🏃","STORM\nSPRINT","Endless runner! Double-jump & outrun the storm!","lobby_sprint"),
         (bg3,"🎯","TARGET\nBLITZ","Click bullseyes. Build combos. 60 sec. Go LEGENDARY!","lobby_blitz"),
         (bg4,"🗺️","ZONE\nWARS","Top-down. WASD + mouse. 4 AI enemies. Storm in!","lobby_zone"),
-        (bg5,"⚽","YAANA\nKICK","Arena soccer! Pick your star player. 3-min match. Score goals!","lobby_soccer"),
+        (bg5,"⚽","YAANA\nKICK","Pick your legend: El Maestro, El Toro & more. 3-min match!","lobby_soccer"),
     ]:
         with col:
             t_lines=title.split('\n')
@@ -2273,20 +2273,20 @@ elif st.session_state.game_mode=="zone_game":
 # ── YAANA KICK ───────────────────────────────────────────────────────────────
 elif st.session_state.game_mode=="lobby_soccer":
     _SC_PLAYERS = {
-        "Messi":       {"jersey":"10","speed":5.3,"kick":13.5,"flag":"🇦🇷","rating":99,"trait":"Dribble King"},
-        "Ronaldo":     {"jersey":"7", "speed":4.9,"kick":15.5,"flag":"🇵🇹","rating":98,"trait":"Power Shot"},
-        "Neymar":      {"jersey":"10","speed":5.1,"kick":13.0,"flag":"🇧🇷","rating":95,"trait":"Tricky Feet"},
-        "Mbappé":      {"jersey":"9", "speed":5.8,"kick":14.0,"flag":"🇫🇷","rating":97,"trait":"Pace Monster"},
-        "Haaland":     {"jersey":"9", "speed":4.8,"kick":16.5,"flag":"🇳🇴","rating":96,"trait":"Clinical"},
-        "Bellingham":  {"jersey":"5", "speed":4.7,"kick":13.5,"flag":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","rating":94,"trait":"All-Round"},
-        "Vinicius Jr": {"jersey":"7", "speed":5.5,"kick":12.5,"flag":"🇧🇷","rating":95,"trait":"Speed Wing"},
-        "Lewandowski": {"jersey":"9", "speed":4.5,"kick":15.5,"flag":"🇵🇱","rating":93,"trait":"Poacher"},
-        "Salah":       {"jersey":"11","speed":5.2,"kick":14.0,"flag":"🇪🇬","rating":93,"trait":"Direct"},
-        "De Bruyne":   {"jersey":"17","speed":4.6,"kick":14.5,"flag":"🇧🇪","rating":94,"trait":"Playmaker"},
+        "El Maestro":   {"jersey":"8", "speed":5.3,"kick":13.5,"flag":"🌟","rating":99,"trait":"Dribble King"},
+        "El Toro":      {"jersey":"9", "speed":4.9,"kick":15.5,"flag":"🔥","rating":98,"trait":"Power Shot"},
+        "Samba":        {"jersey":"11","speed":5.1,"kick":13.0,"flag":"⚡","rating":95,"trait":"Tricky Feet"},
+        "Le Flash":     {"jersey":"7", "speed":5.8,"kick":14.0,"flag":"💨","rating":97,"trait":"Pace Monster"},
+        "The Viking":   {"jersey":"22","speed":4.8,"kick":16.5,"flag":"❄️","rating":96,"trait":"Clinical"},
+        "Midfield Ace": {"jersey":"6", "speed":4.7,"kick":13.5,"flag":"🛡️","rating":94,"trait":"All-Round"},
+        "Rio Wing":     {"jersey":"17","speed":5.5,"kick":12.5,"flag":"🌊","rating":95,"trait":"Speed Wing"},
+        "The Hawk":     {"jersey":"20","speed":4.5,"kick":15.5,"flag":"🦅","rating":93,"trait":"Poacher"},
+        "The Pharaoh":  {"jersey":"14","speed":5.2,"kick":14.0,"flag":"🏆","rating":93,"trait":"Direct"},
+        "Architect":    {"jersey":"18","speed":4.6,"kick":14.5,"flag":"🎯","rating":94,"trait":"Playmaker"},
     }
     _sc_names = list(_SC_PLAYERS.keys())
-    if "sc_p1" not in st.session_state: st.session_state.sc_p1 = "Messi"
-    if "sc_ai" not in st.session_state: st.session_state.sc_ai = "Ronaldo"
+    if "sc_p1" not in st.session_state: st.session_state.sc_p1 = "El Maestro"
+    if "sc_ai" not in st.session_state: st.session_state.sc_ai = "El Toro"
     st.markdown("### ⚽ YAANA KICK — PICK YOUR PLAYER")
     st.markdown('<div style="font-family:Bangers,sans-serif;font-size:13px;letter-spacing:3px;color:#40c4ff;margin-bottom:6px;">TOP 10 WORLD PLAYERS</div>',unsafe_allow_html=True)
     lc,rc=st.columns(2)
@@ -2341,10 +2341,10 @@ elif st.session_state.game_mode=="lobby_soccer":
         if st.button("🏠 MENU",key="sc_back"): full_reset(); st.rerun()
 
 elif st.session_state.game_mode=="soccer_game":
-    p1n=st.session_state.get("soccer_p1","Messi")
-    ain=st.session_state.get("soccer_ai","Ronaldo")
-    p1d=st.session_state.get("soccer_p1d",{"jersey":"10","speed":5.3,"kick":13.5})
-    aid=st.session_state.get("soccer_aid",{"jersey":"7","speed":4.9,"kick":15.5})
+    p1n=st.session_state.get("soccer_p1","El Maestro")
+    ain=st.session_state.get("soccer_ai","El Toro")
+    p1d=st.session_state.get("soccer_p1d",{"jersey":"8","speed":5.3,"kick":13.5})
+    aid=st.session_state.get("soccer_aid",{"jersey":"9","speed":4.9,"kick":15.5})
     html=(_SOCCER_HTML
         .replace("__SC_NAME__",p1n.replace('"',''))
         .replace("__SC_AI_NAME__",ain.replace('"',''))
