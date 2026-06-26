@@ -1827,6 +1827,7 @@ st.markdown("""<div style="text-align:center;padding:18px 0 6px;">
 text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000,
 0 0 50px rgba(255,209,0,.9),0 0 100px rgba(255,100,0,.35);">⚔️ YAANA BATTLE ARENA</div>
 <div style="font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:6px;color:rgba(150,180,255,.5);margin-top:6px;">BATTLE · SURVIVE · DOMINATE</div>
+<div style="font-family:'Rajdhani',sans-serif;font-size:15px;letter-spacing:2px;color:rgba(255,180,80,.75);margin-top:8px;font-style:italic;">No Respawns. No Mercy.</div>
 </div>""", unsafe_allow_html=True)
 st.markdown('<div style="border:none;border-top:1px solid rgba(64,196,255,.18);margin:4px 0 18px;"></div>',unsafe_allow_html=True)
 
