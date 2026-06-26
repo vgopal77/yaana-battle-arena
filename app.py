@@ -1816,13 +1816,23 @@ button[data-testid="baseButton-primary"]:hover{background:linear-gradient(135deg
 /* Blue secondary buttons */
 button[data-testid="baseButton-secondary"]{background:rgba(5,15,50,.8)!important;color:#40c4ff!important;font-family:'Bangers',sans-serif!important;letter-spacing:2px!important;border:1px solid rgba(64,196,255,.35)!important;border-radius:8px!important;}
 button[data-testid="baseButton-secondary"]:hover{background:rgba(20,50,120,.8)!important;border-color:#40c4ff!important;}
-/* Fullscreen button — hidden automatically when in fullscreen, ESC exits natively */
-#_fsbtn{position:fixed;top:10px;right:14px;z-index:2147483647;background:rgba(3,8,28,.92);color:#40c4ff;border:1.5px solid rgba(64,196,255,.45);border-radius:8px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:sans-serif;letter-spacing:1px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
-#_fsbtn:hover{background:rgba(10,25,80,.95);border-color:#40c4ff;}
-:fullscreen #_fsbtn,:-webkit-full-screen #_fsbtn,:-moz-full-screen #_fsbtn{display:none!important;}
-</style>
-<button id="_fsbtn" onclick="var e=document.documentElement;(e.requestFullscreen||e.webkitRequestFullscreen||e.mozRequestFullScreen).call(e);">&#x26f6; FULLSCREEN</button>
-""", unsafe_allow_html=True)
+/* Fullscreen button lives in parent DOM — styles declared here apply to it */
+#_yba_btn{position:fixed;top:10px;right:14px;z-index:2147483647;background:rgba(3,8,28,.92);color:#40c4ff;border:1.5px solid rgba(64,196,255,.45);border-radius:8px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:sans-serif;letter-spacing:1px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+#_yba_btn:hover{background:rgba(10,25,80,.95);border-color:#40c4ff;}
+:fullscreen #_yba_btn,:-webkit-full-screen #_yba_btn,:-moz-full-screen #_yba_btn{display:none!important;}
+</style>""", unsafe_allow_html=True)
+# Inject fullscreen button into the TOP-LEVEL document via script tag so
+# requestFullscreen() runs in the parent browsing context (not Streamlit's React tree)
+components.html("""<script>
+(function(){
+  var pd=window.parent.document;
+  if(pd.getElementById('_yba_sc'))return;
+  var sc=pd.createElement('script');
+  sc.id='_yba_sc';
+  sc.textContent='(function(){if(document.getElementById("_yba_btn"))return;var b=document.createElement("button");b.id="_yba_btn";b.innerHTML="⛶ FULLSCREEN";b.addEventListener("click",function(){var e=document.documentElement;var fn=e.requestFullscreen||e.webkitRequestFullscreen||e.mozRequestFullScreen;if(fn)fn.call(e);});document.body.appendChild(b);document.addEventListener("fullscreenchange",function(){b.style.display=document.fullscreenElement?"none":"";});document.addEventListener("webkitfullscreenchange",function(){b.style.display=document.webkitFullscreenElement?"none":"";});})();';
+  pd.head.appendChild(sc);
+})();
+</script>""", height=0)
 st.markdown("""<div style="text-align:center;padding:18px 0 6px;">
 <div style="font-family:'Bangers',sans-serif;font-size:52px;letter-spacing:10px;color:#fff;
 text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000,
