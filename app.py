@@ -1950,6 +1950,9 @@ if st.session_state.game_mode is None:
 
 **⚽ YAANA KICK:** `WASD` Move · `Space` Kick · `Shift` Sprint · 2 AI opponents + GK
 """)
+    st.markdown("""<div style="text-align:center;margin-top:18px;padding:10px 0 4px;border-top:1px solid rgba(64,196,255,.1);">
+<span style="font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:3px;color:rgba(140,160,210,.45);">© 2025 AYAAN · YAANA BATTLE ARENA · ALL RIGHTS RESERVED</span>
+</div>""", unsafe_allow_html=True)
 
 # ── SP Lobby ──────────────────────────────────────────────────────────────────
 elif st.session_state.game_mode=="lobby_sp":
