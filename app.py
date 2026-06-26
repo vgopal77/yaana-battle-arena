@@ -1800,20 +1800,28 @@ def full_reset():
 # ══════════════════════════════════════════════════════════════════════════════
 init_state()
 st.markdown("""<style>
-div[data-testid="stAppViewContainer"]{background:linear-gradient(160deg,#050d2a 0%,#091535 60%,#0a1a40 100%)!important;}
-div[data-testid="stHeader"]{background:transparent!important;}
-section[data-testid="stSidebar"]{display:none!important;}
-div[data-testid="stToolbar"]{display:none!important;}
-.block-container{padding-top:1rem!important;padding-bottom:1rem!important;max-width:1200px!important;}
+/* Kill the white Streamlit header bar */
+header,header[data-testid="stHeader"]{display:none!important;height:0!important;min-height:0!important;}
+div[data-testid="stDecoration"]{display:none!important;}
+#MainMenu{display:none!important;}
+footer{display:none!important;}
+/* Full-page dark background */
+html,body,.stApp{background:linear-gradient(160deg,#050d2a 0%,#091535 55%,#0a1a40 100%)!important;}
+div[data-testid="stAppViewContainer"]{background:transparent!important;}
+/* Content container */
+.block-container{padding-top:0.6rem!important;padding-bottom:1rem!important;max-width:1200px!important;}
+/* Gold primary buttons */
 button[data-testid="baseButton-primary"]{background:linear-gradient(135deg,#e6a800,#FFD100)!important;color:#050a1a!important;font-family:'Bangers',sans-serif!important;letter-spacing:3px!important;font-size:15px!important;border:none!important;border-radius:8px!important;}
-button[data-testid="baseButton-primary"]:hover{background:linear-gradient(135deg,#FFD100,#ffe55c)!important;transform:scale(1.03)!important;}
+button[data-testid="baseButton-primary"]:hover{background:linear-gradient(135deg,#FFD100,#ffe55c)!important;}
+/* Blue secondary buttons */
 button[data-testid="baseButton-secondary"]{background:rgba(5,15,50,.8)!important;color:#40c4ff!important;font-family:'Bangers',sans-serif!important;letter-spacing:2px!important;border:1px solid rgba(64,196,255,.35)!important;border-radius:8px!important;}
 button[data-testid="baseButton-secondary"]:hover{background:rgba(20,50,120,.8)!important;border-color:#40c4ff!important;}
-</style>""", unsafe_allow_html=True)
-# Page fullscreen button
-st.components.v1.html("""<div style="position:fixed;top:10px;right:14px;z-index:99999;">
-<button onclick="(function(){if(!document.fullscreenElement){window.parent.document.documentElement.requestFullscreen().catch(function(){});}else{window.parent.document.exitFullscreen();}window.parent.document.addEventListener('fullscreenchange',function(){});})();"
-style="background:rgba(5,12,40,.85);color:#40c4ff;border:1.5px solid rgba(64,196,255,.4);border-radius:8px;padding:7px 14px;font-size:15px;cursor:pointer;font-family:sans-serif;letter-spacing:1px;" title="Toggle Fullscreen">⛶ FULLSCREEN</button></div>""", height=50)
+/* Fullscreen button */
+#_fsbtn{position:fixed;top:10px;right:14px;z-index:2147483647;background:rgba(3,8,28,.92);color:#40c4ff;border:1.5px solid rgba(64,196,255,.45);border-radius:8px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:sans-serif;letter-spacing:1px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+#_fsbtn:hover{background:rgba(10,25,80,.95);border-color:#40c4ff;}
+</style>
+<button id="_fsbtn" onclick="(function(b){if(!document.fullscreenElement){document.documentElement.requestFullscreen().then(function(){b.innerHTML='&#x2715; EXIT FULL';}).catch(function(e){alert('Fullscreen not supported: '+e.message);});}else{document.exitFullscreen().then(function(){b.innerHTML='&#x26f6; FULLSCREEN';});}document.addEventListener('fullscreenchange',function(){b.innerHTML=document.fullscreenElement?'&#x2715; EXIT FULL':'&#x26f6; FULLSCREEN';},{once:false});}).call(this,this);">&#x26f6; FULLSCREEN</button>
+""", unsafe_allow_html=True)
 st.markdown("""<div style="text-align:center;padding:18px 0 6px;">
 <div style="font-family:'Bangers',sans-serif;font-size:46px;letter-spacing:8px;color:#fff;
 text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000,
