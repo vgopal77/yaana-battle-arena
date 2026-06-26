@@ -1823,10 +1823,10 @@ button[data-testid="baseButton-secondary"]:hover{background:rgba(20,50,120,.8)!i
 <button id="_fsbtn" onclick="(function(b){if(!document.fullscreenElement){document.documentElement.requestFullscreen().then(function(){b.innerHTML='&#x2715; EXIT FULL';}).catch(function(e){alert('Fullscreen not supported: '+e.message);});}else{document.exitFullscreen().then(function(){b.innerHTML='&#x26f6; FULLSCREEN';});}document.addEventListener('fullscreenchange',function(){b.innerHTML=document.fullscreenElement?'&#x2715; EXIT FULL':'&#x26f6; FULLSCREEN';},{once:false});}).call(this,this);">&#x26f6; FULLSCREEN</button>
 """, unsafe_allow_html=True)
 st.markdown("""<div style="text-align:center;padding:18px 0 6px;">
-<div style="font-family:'Bangers',sans-serif;font-size:46px;letter-spacing:8px;color:#fff;
+<div style="font-family:'Bangers',sans-serif;font-size:52px;letter-spacing:10px;color:#fff;
 text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000,
-0 0 40px rgba(255,209,0,.8),0 0 80px rgba(255,100,0,.3);">💥 FORTNITE BATTLE SIMULATOR</div>
-<div style="font-family:'Rajdhani',sans-serif;font-size:12px;letter-spacing:5px;color:rgba(150,180,255,.55);margin-top:4px;">BATTLE · SURVIVE · WIN</div>
+0 0 50px rgba(255,209,0,.9),0 0 100px rgba(255,100,0,.35);">⚔️ YAANA BATTLE ARENA</div>
+<div style="font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:6px;color:rgba(150,180,255,.5);margin-top:6px;">BATTLE · SURVIVE · DOMINATE</div>
 </div>""", unsafe_allow_html=True)
 st.markdown('<div style="border:none;border-top:1px solid rgba(64,196,255,.18);margin:4px 0 18px;"></div>',unsafe_allow_html=True)
 
